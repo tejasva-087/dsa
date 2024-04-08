@@ -1,2 +1,1 @@
-# dsa-js
-DSA in Javascript (By colt steel)
+# DSA in Javascript (By colt steel)
