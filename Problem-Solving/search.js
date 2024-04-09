@@ -19,17 +19,70 @@
 
 // Trying refactored version on my own
 // const search = function (arr, n) {
-//   while (true) {
-//     let middle = Math.trunc(arr.length / 2);
-//     if (n === arr[middle]) {
-//       return middle;
-//     } else if (n > arr[middle]) {
-//       middle = middle - Math.trunc(middle / 2);
+//   let min = 0;
+//   let max = arr.length;
+//   while (min !== max) {
+//     const middle = Math.trunc((min + max) / 2);
+//     const middleVal = arr[middle];
+//     if (middleVal > n) {
+//       max = middle;
+//     } else if (middleVal < n) {
+//       min = middle;
 //     } else {
-//       middle = middle + Math.trunc(middle / 2);
+//       return middle;
 //     }
 //   }
+//   return -1;
 // };
+
+// Naive approach :)
+// function search(arr, val) {
+//   for (let i = 0; i < arr.length; i++) {
+//     if (arr[i] === val) {
+//       return i;
+//     }
+//   }
+//   return -1;
+// }
+
+// refactored solution
+// function search(array, val) {
+//   let min = 0;
+//   let max = array.length - 1;
+
+//   while (min <= max) {
+//     let middle = Math.floor((min + max) / 2);
+//     let currentElement = array[middle];
+
+//     if (array[middle] < val) {
+//       min = middle + 1;
+//     } else if (array[middle] > val) {
+//       max = middle - 1;
+//     } else {
+//       return middle;
+//     }
+//   }
+
+//   return -1;
+// }
+
+// solving after understanding the solution
+const search = function (arr, n) {
+  let min = 0;
+  let max = arr.length - 1;
+  while (min <= max) {
+    let middle = Math.trunc((min + max) / 2);
+    let currentElement = arr[middle];
+    if (currentElement === n) {
+      return middle;
+    } else if (currentElement < n) {
+      min = middle + 1;
+    } else {
+      max = middle - 1;
+    }
+  }
+  return -1;
+};
 
 console.log(search([1, 2, 3, 4, 5, 6], 4));
 console.log(search([1, 2, 3, 4, 5, 6], 6));
