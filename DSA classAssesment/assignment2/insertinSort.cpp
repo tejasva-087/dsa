@@ -13,6 +13,8 @@ void insertionSort(int arr[], int size) {
 				int temp = arr[element];
 				arr[element] = arr[element - 1];
 				arr[element - 1] = temp;
+			} else {
+				break;
 			}
 
 			element--;
