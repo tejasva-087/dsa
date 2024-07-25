@@ -2,8 +2,9 @@
 using namespace std;
 
 int top = -1;
-int maxSize = 50;
-int stack[50];
+const int maxSize = 50;
+int stack[maxSize];
+
 
 bool isEmpty() {
 	return (top < 0);
@@ -37,7 +38,7 @@ int peek() {
 	return stack[top];
 }
 
-void disply() {
+void display() {
 	if (isEmpty()) {
 		cout << "Stack is empty" << endl;
 		return;
@@ -54,6 +55,7 @@ int main() {
 	push(11);
 	push(12);
 	push(13);
+	display();
 	// cout << top << endl;
 
 	// cout << isEmpty() << endl;
@@ -61,7 +63,9 @@ int main() {
 
 	cout << pop() << endl;
 	cout << peek() << endl;
-	disply();
+	display();
+	cout << peek() << endl;
+	
 
 	return 0;
 }
