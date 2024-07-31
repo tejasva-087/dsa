@@ -8,30 +8,22 @@ const sumZero = function (arr) {
   let ptr1 = 0;
   let ptr2 = arr.length - 1;
 
-  while (ptr1 < arr.length) {
-    if (ptr2 <= ptr1) {
-      ptr1++;
-      ptr2 = arr.length - 1;
-    }
+  while (ptr1 < ptr2) {
+    let val1 = arr[ptr1];
+    let val2 = arr[ptr2];
+    let sum = val1 + val2;
 
-    const val1 = arr[ptr1];
-    const val2 = arr[ptr2];
-
-    if (val1 + val2 === 0) {
-      console.log([val1, val2]);
-      return;
-    }
-
-    ptr2--;
+    if (sum === 0) return [val1, val2];
+    else if (sum < 0) ptr1++;
+    else ptr2--;
   }
 
-  console.log(undefined);
-  return;
+  return undefined;
 };
 
-sumZero([-3, -2, -1, 0, 1, 2, 3]); // [-3,3]
-sumZero([-3, -2, -1, 1, 2]); // [-2,2]
-sumZero([-1, 1, 2, 3]); // [-1, 1]
-sumZero([]); // undefined
-sumZero([-2, 0, 1, 3]); // undefined
-sumZero([1, 2, 3]); // undefined
+console.log(sumZero([-3, -2, -1, 0, 1, 2, 3])); // [-3,3]
+console.log(sumZero([-3, -2, -1, 1, 2])); // [-2,2]
+console.log(sumZero([-1, 1, 2, 3])); // [-1, 1]
+console.log(sumZero([])); // undefined
+console.log(sumZero([-2, 0, 1, 3])); // undefined
+console.log(sumZero([1, 2, 3])); // undefined
