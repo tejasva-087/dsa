@@ -30,7 +30,7 @@ const findLongestSubstring = function(str) {
 }
 
 findLongestSubstring(""); // 0
-findLongestSubstring("rithmschool"); // 9
+findLongestSubstring("rithmschool"); // 7
 findLongestSubstring("thisisawesome"); // 6
 findLongestSubstring("thecatinthehat"); // 7
 findLongestSubstring("bbbbbb"); // 1
