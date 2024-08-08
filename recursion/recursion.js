@@ -148,5 +148,94 @@ var obj2 = {
   e: { e: { e: 2 }, ee: "car" },
 };
 
-// nestedEvenSum(obj1); // 6
+function nestedEvenSum(obj) {
+  let sum = 0;
+  console.log(obj);
+  for (var key in obj) {
+    if (typeof obj[key] === "object") sum += nestedEvenSum(obj[key]);
+    else if (typeof obj[key] === "number" && obj[key] % 2 === 0)
+      sum += obj[key];
+  }
+
+  return sum;
+}
+
+// console.log(nestedEvenSum(obj1));
 // nestedEvenSum(obj2); // 10
+
+// capitalizeWords
+// Write a recursive function called capitalizeWords. Given an array of words, return a new array containing each word capitalized.
+
+const capitalizeWord = function (arr) {
+  if (arr.length === 1) {
+    return [arr[0].toUpperCase()];
+  }
+  const res = capitalizeWord(arr.slice(0, -1));
+  res.push(arr[arr.length - 1].toUpperCase());
+  return res;
+};
+
+// console.log(capitalizeWord(['car','taco','banana']))
+
+// Write a function called stringifyNumbers which takes in an object and finds all of the values which are numbers and converts them to strings. Recursion would be a great way to solve this!
+
+// The exercise intends for you to create a new object with the numbers converted to strings, and not modify the original. Keep the original object unchanged.
+
+const stringifyNumbers = function (obj) {
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      stringifyNumbers(obj[key]);
+    } else if (typeof obj[key] === "number") {
+      obj[key] = String(obj[key]);
+    }
+  }
+};
+
+let obj = {
+  num: 1,
+  test: [],
+  data: {
+    val: 4,
+    info: {
+      isRight: true,
+      random: 66,
+    },
+  },
+};
+
+stringifyNumbers(obj);
+
+// console.log(obj);
+
+// collectStrings
+// Write a function called collectStrings which accepts an object and returns an array of all the values in the object that have a typeof string
+
+const collectStrings = function (obj) {
+  let arr = [];
+  for (const key in obj) {
+    if (typeof obj[key] === "object") {
+      arr = arr.concat(collectStrings(obj[key]));
+    } else if (typeof obj[key] === "string") {
+      arr.push(obj[key]);
+    }
+  }
+  return arr;
+};
+
+const object = {
+  stuff: "foo",
+  data: {
+    val: {
+      thing: {
+        info: "bar",
+        moreInfo: {
+          evenMoreInfo: {
+            weMadeIt: "baz",
+          },
+        },
+      },
+    },
+  },
+};
+
+console.log(collectStrings(object));
