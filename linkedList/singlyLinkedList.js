@@ -131,7 +131,7 @@ class SinglyLinkedList {
 
     let currentNode = this.head;
     this.head = this.tail;
-    this.tail = this.head;
+    this.tail = currentNode;
     let next;
     let prev = null;
 
@@ -141,6 +141,10 @@ class SinglyLinkedList {
       prev = currentNode;
       currentNode = next;
     }
+
+    this.head.next = prev;
+
+    return this;
   }
 
   print() {
@@ -164,8 +168,3 @@ list
   .push("Tejasva")
   .push("Khandelwal")
   .push("Hi");
-
-// list.reverse();
-
-// console.log(list);
-list.print();
