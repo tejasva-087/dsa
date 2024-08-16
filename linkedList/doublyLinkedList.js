@@ -46,7 +46,7 @@ class DoublyLinkedList {
 
     const node = this.head;
 
-    if (this.length === 0) this.head = this.tail = null;
+    if (this.length === 1) this.head = this.tail = null;
     else {
       this.head = node.next;
       this.head.prev = null;
@@ -122,6 +122,23 @@ class DoublyLinkedList {
 
     return true;
   }
+
+  remove(index) {
+    if (index < 0 || index > this.length) return false;
+
+    if (index === 0) return this.shift();
+
+    if (index === this.length - 1) return this.pop();
+
+    const node = this.get(index);
+
+    node.prev.next = node.next;
+    node.next.prev = node.prev;
+    node.next = node.prev = null;
+    this.length--;
+
+    return node;
+  }
 }
 
 const list = new DoublyLinkedList();
@@ -134,6 +151,6 @@ list
   .push("Khandelwal")
   .push("Hi");
 
-console.log(list.insert(3, "HHHE"));
+console.log(list.remove(3));
 
 console.log(list);

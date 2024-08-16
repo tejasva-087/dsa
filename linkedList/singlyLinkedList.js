@@ -1,11 +1,10 @@
-class Node {
+export class Node {
   constructor(val) {
     this.value = val;
     this.next = null;
   }
 }
-
-class SinglyLinkedList {
+export class SinglyLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -44,7 +43,7 @@ class SinglyLinkedList {
       this.tail = null;
     }
 
-    return currentNode.value;
+    return currentNode;
   }
 
   shift() {
@@ -52,12 +51,14 @@ class SinglyLinkedList {
 
     const prevHead = this.head;
     this.head = prevHead.next;
+    prevHead.next = null;
     this.length--;
+
     if (this.length === 0) {
       this.head = null;
       this.tail = null;
     }
-    return prevHead.value;
+    return prevHead;
   }
 
   unshift(val) {
@@ -158,13 +159,3 @@ class SinglyLinkedList {
     console.log(arr);
   }
 }
-
-const list = new SinglyLinkedList();
-list
-  .push("Hello")
-  .push("world")
-  .push("I")
-  .push("Am")
-  .push("Tejasva")
-  .push("Khandelwal")
-  .push("Hi");
