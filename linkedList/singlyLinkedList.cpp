@@ -5,9 +5,9 @@ class Node {
   public:
   int value;
   Node* next;
-  
+
   Node(int val) {
-    this->value = val;
+    this -> value = val;
     next = nullptr;
   }
 };
@@ -19,84 +19,133 @@ class SinglyLinkedList {
   int length;
 
   SinglyLinkedList() {
-    head = nullptr;
-    tail = nullptr;
-    length = 0;
+    this -> head = nullptr;
+    this -> tail = nullptr;
+    this -> length = 0;
   }
 
-  // IMP: Get method
+  // Get method
   Node* get(int index) {
-
-    if (index < 0 || index > this -> length) {
+    if (index > this -> length || index < 0) {
       return nullptr;
     }
+
     Node* currentNode = this -> head;
-    
     for (int i = 0; i < index; i++) {
       currentNode = currentNode -> next;
     }
     return currentNode;
   }
 
-  // IMP Push method
+  bool set(int index, int value) {
+    if (index > this -> length || index < 0) {
+      return false;
+    }
+    Node* node = this -> get(index);
+    node -> value = value;
+    return true;
+  }
+
   SinglyLinkedList* push(int val) {
     Node* newNode = new Node(val);
 
     if (!this -> head) {
-      this -> head = newNode;
       this -> tail = newNode;
+      this -> head = newNode;
     } else {
       this -> tail -> next = newNode;
       this -> tail = newNode;
     }
-    this -> length++; 
+    this -> length++;
+
     return this;
   }
 
-
-  // IMP Pop method
-  Node* pop() {
-    Node* node =  this -> get(this -> length - 2);
-    if (!node) {
-      return nullptr;
-    }
-    Node* next = node -> next;
-    node -> next = nullptr;
-    this -> length--;
-
-    return next;
-  }
-
-  // IMP unshift method
   SinglyLinkedList* unshift(int val) {
     Node* newNode = new Node(val);
+
     if (!this -> head) {
-      this -> head = newNode;
       this -> tail = newNode;
+      this -> head = newNode;
     } else {
       newNode -> next = this -> head;
-      this -> head = newNode;  
+      this -> head = newNode;
     }
     this -> length++;
-    return  this;
+
+    return this;
   }
 
-  // IMP shift method
-  Node* shift() {
-    if (! this -> head) {
+  SinglyLinkedList* insert(int index, int value) {
+    if (index < 0 || index >= this -> length) {
       return nullptr;
     }
 
-    Node* node = this -> head;
-    this -> head = node -> next;
-    this -> length--;
+    if (index == 0) {
+      this -> unshift(value);
+      return this;
+    }
 
-    return node;
+    if (index == this -> length - 1) {
+      this -> push(value);
+      return this;
+    }
+
+    Node* newNode = new Node(value);
+    Node* nodeBefore = this -> get(index - 1);
+
+    newNode -> next = nodeBefore -> next;
+    nodeBefore -> next = newNode;
+
+    this -> length++;
+
+    return this; 
   }
 
-  // IMP Remove method
+  Node* pop() {
+
+    if (!this -> head) {
+      return nullptr;
+    }
+    Node* currentNode = this -> head;
+    Node* previousNode = currentNode;
+
+    while (currentNode -> next) {
+      previousNode = currentNode;
+      currentNode = currentNode -> next;
+    }
+
+    previousNode -> next = nullptr;
+    this -> tail = previousNode;
+    this -> length--;
+
+    if (this -> length == 0) {
+      this -> head = this -> tail = nullptr;
+    }
+
+    return currentNode;
+  }
+
+  Node* shift() {
+    if (!this -> head) {
+      return nullptr;
+    }
+
+    Node* oldHead = this -> head;
+    this -> head = oldHead -> next;
+    oldHead -> next = nullptr;
+    this -> length--;
+
+    if (this -> length == 0) {
+      this -> head = this -> tail = nullptr;
+    }
+
+    return oldHead;
+  }
+
   Node* remove(int index) {
-    if (index < 0 || index > this -> length) {
+
+    if (index > this -> length || index < 0) {
       return nullptr;
     }
 
@@ -108,36 +157,75 @@ class SinglyLinkedList {
       return this -> pop();
     }
 
-    Node* node = this -> get(index - 1);
-    Node* next = node -> next;
-    node -> next = next -> next;
+    Node* node = this -> get(index);
+    Node* prevNode = this -> get(index - 1);
+
+    prevNode -> next = node -> next;
+    node -> next = nullptr;
+    this -> length--;
+
+    if (this -> length == 0) {
+      this -> head = this -> tail = nullptr;
+    }
+
+    return node;
   }
 
   void print() {
     if (!this -> head) {
-      cout << "[]" << endl;    
-    } else {
-      Node* current = this -> head;
-      cout << "[ ";
-      while (current) {
-        cout << current -> value << " ";
-        current = current -> next;
-      }
-      cout << "]" << endl;
+      cout << "[]" << endl;
+      return;
     }
+
+    Node* current = this -> head;
+    cout << "[ ";
+
+    while (current -> next) {
+      cout << current -> value << " ";
+      current = current -> next;
+    }
+    cout << current -> value;
+    cout << " ]" << endl;
   }
 };
 
-  
 int main() {
   SinglyLinkedList list;
-  list.push(10);
-  list.push(11);
-  list.unshift(12);
-  list.unshift(13);
 
   list.print();
-  cout << list.shift() -> value << endl;
+
+  list.push(10);
+  list.push(12);
+  list.push(1122);
+
+
   list.print();
+
+  list.unshift(123);
+  list.unshift(1);
+
+  list.print();
+  
+  list.pop();
+  list.pop();
+  list.print();
+
+  list.insert(0, 12);
+  list.insert(2, 124);
+  list.insert(list.length - 1, 12);
+  list.print();
+
+  list.set(2, 14);
+  list.print();
+
+  list.shift();
+  list.print();
+  
+  list.remove(3);
+  list.print();
+
+  cout << list.length << endl;
+  cout << list.head -> value << " " << list.tail -> value << endl;
+
   return 0;
 }

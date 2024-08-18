@@ -159,3 +159,8 @@ export class SinglyLinkedList {
     console.log(arr);
   }
 }
+
+const list = new SinglyLinkedList();
+
+list.push(1).push(2).push(3);
+console.log(list.pop());
